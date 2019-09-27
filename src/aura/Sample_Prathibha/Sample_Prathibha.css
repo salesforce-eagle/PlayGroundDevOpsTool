@@ -1,0 +1,10 @@
+.THIS {
+}
+.THIS .formHide {
+	display: none;
+}
+.THIS .slds-modal__container{
+       max-width: 70rem ;
+       width:90% ;
+
+}

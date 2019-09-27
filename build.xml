@@ -1,0 +1,90 @@
+<project name="undefined" default="CheckLocalRepoStatus" basedir="." xmlns:sf="antlib:com.salesforce">
+    <property file="../build.properties"/>
+    <property environment="env"/>
+
+    <condition property="sf.username" value=""> <not> <isset property="sf.username"/> </not> </condition>
+    <condition property="sf.password" value=""> <not> <isset property="sf.password"/> </not> </condition>    
+    <taskdef resource="com/salesforce/antlib.xml" uri="antlib:com.salesforce">
+        <classpath>
+            <pathelement location="ant-salesforce.jar" />
+        </classpath>
+    </taskdef>
+	
+	<!--	Defining Marcro to execute Git command in ANT -->    
+    <macrodef name = "git">
+        <attribute name = "command" />
+        <attribute name = "dir" default = "" />
+        <element name = "args" optional = "true" />
+        <sequential>
+            <echo message = "git @{command}" />
+            <exec executable = "git" dir = "@{dir}">
+                <arg value = "@{command}" />
+                <args/>
+            </exec>
+        </sequential>
+    </macrodef>
+	<!-- Checkout to Branch and pull data then will merge with Devall branch -->    
+    <macrodef name = "git-checkout-status-merge-undeploy-deploy">
+        <attribute name = "branch" />
+        <attribute name = "dest" default = ""/>
+        <sequential>
+            <git command = "checkout">
+                <args>
+                    <arg value = "@{branch}"/>
+                    <arg value = "@{dest}" />
+                </args>
+            </git>            
+            <git command = "pull" />
+            <git command = "status" />
+            <git command = "merge">
+                <args>
+                    <arg value = "${RequiredBranch}" />
+                </args>
+            </git>
+        </sequential>
+    </macrodef>
+	<!-- Target for taking approval from user: Yes or No -->    
+    <target name="acceptparam" >        
+        <input message="Do you want to continue (yes/no)?" validargs="yes,no" addproperty="userparam"/>
+        <condition property="do.cont">
+            <equals arg1="yes" arg2="${userparam}"/>
+        </condition>
+        <condition property="do.abort">
+            <equals arg1="no" arg2="${userparam}"/>
+        </condition>
+        <antcall target="if${userparam}"/>        
+    </target>	
+	
+	<!--	Accept Parames for case insensitive Data	-->
+	<target name ="ifyes" >
+        <sf:deploy username="${sf.username}" password="${sf.password}" serverurl="${sf.serverurl}" maxPoll="${sf.maxPoll}" deployRoot="/src" rollbackOnError="true"/>
+    </target>
+    <target name ="ifN" depends ="">
+        <echo> Build aborted by user</echo>
+    </target>
+    <target name ="ify" >
+        <sf:deploy username="${sf.username}" password="${sf.password}" serverurl="${sf.serverurl}" maxPoll="${sf.maxPoll}" deployRoot="/src" rollbackOnError="true"/>
+    </target>
+    <target name ="ifY" >
+        <sf:deploy username="${sf.username}" password="${sf.password}" serverurl="${sf.serverurl}" maxPoll="${sf.maxPoll}" deployRoot="/src" rollbackOnError="true"/>
+    </target>
+    <target name ="ifn" depends ="">
+        <echo> Build aborted by user</echo>
+    </target>
+	
+	<!-- Club all the Marcro's in One Target to make use of the Single Command -->    
+    <target name="UpgradeMySandbox" >
+        <git-checkout-status-merge-undeploy-deploy branch="${branch}" />
+        <echo>Any changes on your sandbox that are not commited to GIT branch will be lost.</echo>
+        <input message="Do you still wants to continue (y/n)?" validargs="y,n,Y,N" addproperty="userparam"/>
+        <antcall target="if${userparam}"/>
+		<sf:deploy username="${sf.username}" password="${sf.password}" serverurl="${sf.serverurl}" maxPoll="${sf.maxPoll}" deployRoot="../PackagetoRemoveFromSandbox"/>
+    </target>
+	
+	<!-- 	Retrieve data from Sandbox and store it in your local folder, The package.xml will be stored in local	-->
+	<target name="RetrieveLocalChanges" >        
+        <sf:retrieve username="${sf.username}" password="${sf.password}" serverurl="${sf.serverurl}" maxPoll="${sf.maxPoll}" retrieveTarget="src" unpackaged="../package.xml"/>
+        <git-checkout-status-merge-undeploy-deploy branch="${branch}" />
+    </target>
+	
+</project>	

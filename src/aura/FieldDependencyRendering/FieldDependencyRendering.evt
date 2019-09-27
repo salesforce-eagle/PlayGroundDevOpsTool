@@ -1,0 +1,3 @@
+<aura:event type="APPLICATION" description="Enables components that use GenericSectionGenerator to have dynamic rendering of fields" > 
+    <aura:attribute name="payload" type="Object"/>
+</aura:event>

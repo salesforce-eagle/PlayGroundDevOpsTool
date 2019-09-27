@@ -1,0 +1,22 @@
+<aura:component implements="flexipage:availableForRecordHome,force:hasRecordId,force:hasSObjectName" controller="TestController" access="global" >
+    <aura:handler name="init" action="{!c.getcons}" value="{!this}" />
+    <aura:attribute name="cons" type="List" />
+    
+    <lightning:card >
+        <p class="slds-p-horizontal_small">
+            <div aura:id="recordViewForm">
+                <aura:iteration items="{!v.cons}" var="contact">
+                    <lightning:recordEditForm recordId="{!contact.Id}" objectApiName="Contact">
+                        <div id="divId" class="slds-box slds-theme_default">
+                            <lightning:input type="checkbox" aura:id="deleteContact" />
+                            <br />
+                            <lightning:inputField fieldName="FirstName" value="" />
+                        </div>
+                    </lightning:recordEditForm>
+                    <br />
+                </aura:iteration>
+            </div>
+        </p>
+    </lightning:card>
+    
+        </aura:component>

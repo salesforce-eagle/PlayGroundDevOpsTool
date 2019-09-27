@@ -1,0 +1,32 @@
+<aura:component implements="force:appHostable,flexipage:availableForAllPageTypes"
+                access="global">
+    <aura:handler name="init" action="{!c.myAction}" value="{!this}" />
+    <aura:attribute name="xy" type="List" default="['x','y']"/>
+    
+    <!-- @pkumar: working example for rec edit form without any js code or apex call -->
+
+	<!-- <lightning:recordEditForm aura:id="recordEditForm" 
+                           objectApiName="Contact">
+        <lightning:messages />
+        <lightning:inputField fieldName="Name" />
+        <lightning:button class="slds-m-top_small" type="submit" label="Create new" />
+    </lightning:recordEditForm> -->
+    
+    <!-- working example for submission of rec edit form with js code, button being outside of RE form -->
+    <!-- <lightning:recordEditForm aura:id="editForm" objectApiName="Contact">
+      <lightning:messages />
+      <lightning:inputField fieldName="FirstName" />
+      <lightning:inputField fieldName="LastName" />
+      <lightning:inputField fieldName="Email" />
+	</lightning:recordEditForm>
+	<lightning:button class="slds-m-top_small" variant="brand" type="button" name="update" label="Create new" onclick="{!c.update}" />	
+    -->
+     <!-- <aura:iteration items="1,2,3,4,5" var="item">
+        <meter value="{!item / 5}"/><br/>
+    </aura:iteration> -->
+    {!v.xy}
+    <!-- <aura:iteration items="{!v.xy}" var="item">
+        Hi, {!item} 
+        
+    </aura:iteration> -->
+</aura:component>

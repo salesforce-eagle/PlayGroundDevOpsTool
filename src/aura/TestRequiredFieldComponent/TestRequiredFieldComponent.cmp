@@ -1,0 +1,30 @@
+<!--	TestRequiredFieldComponent	-->
+<aura:component implements="force:appHostable,force:hasSObjectName,flexipage:availableForAllPageTypes,flexipage:availableForRecordHome,force:hasRecordId,forceCommunity:availableForAllPageTypes,force:lightningQuickAction" access="global" >
+    <aura:attribute name="ObjectAPIName" type="string" />
+    <aura:attribute name="ObjectLabelName" type="string" />
+    <aura:method name="validateContact" action="{!c.validateContact}" />
+	<aura:handler name="init" value="{!this}" action="{!c.doInit}"/>
+    <lightning:recordEditForm 	aura:id="form1"
+                             	objectApiName="Account"
+                                recordId="0016F00002Q5703QAB"
+                             	onload="{!c.changeHandle}">        
+    	
+        <lightning:inputField 	class="customRequired" 
+                              	aura:id="Input"
+                              	fieldName="Name"
+                              	value=""/>    
+    	<lightning:inputField 	class="customRequired" 
+                              	aura:id="Input" 
+                              	fieldName="NaicsCode"
+                              	value=""/>        
+    	<lightning:inputField 	class="customRequired" 
+								aura:id="Input"
+                              	fieldName="AccountNumber" 
+                              	value=""/>
+    </lightning:recordEditForm>
+    <lightning:button disabled="{!v.disabled}" 
+                      variant="brand" 
+                      type="submit" name="save" label="Save" 
+                      onclick="{!c.showRequiredFields}" />        
+    
+</aura:component>

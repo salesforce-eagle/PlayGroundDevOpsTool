@@ -1,0 +1,21 @@
+<aura:component implements="force:appHostable,flexipage:availableForAllPageTypes,flexipage:availableForRecordHome,force:hasRecordId,forceCommunity:availableForAllPageTypes,force:lightningQuickAction,lightning:hasPageReference" 
+                access="global" 
+                controller="ChildObjectContorller"	>
+    <aura:attribute name="defaultTab" type="string" default="" />
+    <aura:attribute name="pageReference" type="Object"/>
+    
+    <lightning:tabset selectedTabId="{!v.defaultTab}">
+        
+        <lightning:tab label="Item 1" id="one">
+            <lightning:button label="Switch to 2" onclick="{! c.toggleOptionalTab }" />
+        </lightning:tab>
+        <lightning:tab label="Item 2" id="two">
+            <lightning:button label="Switch to 3" onclick="{! c.toggleOptionalTab }" />
+        </lightning:tab>
+        <lightning:tab label="Item 3" id="three">
+            <lightning:button label="Switch to 1" onclick="{! c.toggleOptionalTab }" />
+        </lightning:tab>
+        
+    </lightning:tabset>
+    
+</aura:component>

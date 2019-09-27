@@ -1,0 +1,4 @@
+<aura:event type="APPLICATION">
+    <aura:attribute name="changedFieldName" type="String"/>
+    <aura:attribute name="changedFieldValue" type="String"/>
+</aura:event>

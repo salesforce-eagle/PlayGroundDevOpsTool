@@ -1,0 +1,7 @@
+<aura:component implements="force:appHostable,flexipage:availableForAllPageTypes,flexipage:availableForRecordHome,force:hasRecordId,forceCommunity:availableForAllPageTypes,lightning:availableForChatterExtensionRenderer,force:lightningQuickAction" 
+                access="global" >
+    <forceChatter:publisher context="GLOBAL" />
+    <forceChatter:feed type="Company" />
+    <aura:handler event="forceChatter:postCreated" action="{!c.handlePostCreated}"/>
+    <lightning:notificationsLibrary aura:id="notifLib"/>
+</aura:component>

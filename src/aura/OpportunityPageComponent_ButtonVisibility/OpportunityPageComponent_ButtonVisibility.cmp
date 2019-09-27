@@ -1,0 +1,21 @@
+<aura:component implements="force:appHostable,flexipage:availableForAllPageTypes,flexipage:availableForRecordHome,force:hasRecordId,forceCommunity:availableForAllPageTypes,force:lightningQuickAction" 
+                access="global" >
+    <aura:attribute name="simpleRecord" type="Object" />
+    <aura:attribute name="record" type="Object" />
+    <aura:handler name="init" value="this" action="{!c.doInit}"/>
+    <aura:attribute name="allFields" 
+                    type="String[]" 
+                    default="['Id', 'StageName']"/>
+    
+    <force:recordData aura:id="recordEditor" 
+                      recordId="{!v.recordId}"
+                      targetRecord ="{!v.record}" 
+                      mode="VIEW"
+                      targetFields ="{!v.simpleRecord}"
+                      fields="{!v.allFields}"
+                      />
+    BibhuDananda Dash-- {!v.simpleRecord.StageName}
+    <aura:if isTrue="{!v.simpleRecord.StageName == 'Closed Won'}">
+        <lightning:button variant="brand" type="button" name="ShowButton" label="Update Opp Status" />
+    </aura:if>
+</aura:component>

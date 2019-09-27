@@ -1,0 +1,4 @@
+<aura:event type="APPLICATION">
+    <aura:attribute name="mode" type="String"/>
+    <aura:attribute name="cmpName" type="String"/>
+</aura:event>
