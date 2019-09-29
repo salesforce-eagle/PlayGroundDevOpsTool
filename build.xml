@@ -23,8 +23,8 @@
             </exec>
         </sequential>
     </macrodef>
-	<!-- Checkout to Branch and pull data then will merge with Devall branch -->    
-    <macrodef name = "git-checkout-status-merge-undeploy-deploy">
+	<!--	Checkout And Pull before deploying	-->
+	<macrodef name = "git-checkout">
         <attribute name = "branch" />
         <attribute name = "dest" default = ""/>
         <sequential>
@@ -33,14 +33,28 @@
                     <arg value = "@{branch}"/>
                     <arg value = "@{dest}" />
                 </args>
-            </git>            
-            <git command = "pull" />
-            <git command = "status" />
-            <git command = "merge">
-                <args>
-                    <arg value = "${RequiredBranch}" />
-                </args>
             </git>
+            <git command = "pull" />
+        </sequential>
+    </macrodef>
+	<!-- Checkout to Branch and pull data then will merge with Devall branch -->    
+    <macrodef name = "git-status-commit-push">
+        <attribute name = "commit-message" />
+        <!--<attribute name = "dest" default = ""/>-->
+        <sequential>
+		<git command = "status"/>
+        <git command="add">
+			<args>
+				<arg value="."/>
+			</args>
+		</git>
+            <git command = "status"/>	
+		<git command="commit">
+			<args>
+				<arg value="-am ${commit-message}" />
+			</args>
+		</git>
+		<git command = "push"/>
         </sequential>
     </macrodef>
 	<!-- Target for taking approval from user: Yes or No -->    
@@ -82,9 +96,10 @@
     </target>
 	
 	<!-- 	Retrieve data from Sandbox and store it in your local folder, The package.xml will be stored in local	-->
-	<target name="RetrieveLocalChanges" >        
+	<target name="RetrieveLocalChanges" >
+		<git-checkout branch="${branch}" />
         <sf:retrieve username="${sf.username}" password="${sf.password}" serverurl="${sf.serverurl}" maxPoll="${sf.maxPoll}" retrieveTarget="src" unpackaged="../package.xml"/>
-        <git-checkout-status-merge-undeploy-deploy branch="${branch}" />
+        <git-status-commit-push commit-message="${commit-message}"/>
     </target>
 	
 </project>	
