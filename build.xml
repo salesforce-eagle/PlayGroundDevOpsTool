@@ -92,7 +92,7 @@
         <echo>Any changes on your sandbox that are not commited to GIT branch will be lost.</echo>
         <input message="Do you still wants to continue (y/n)?" validargs="y,n,Y,N" addproperty="userparam"/>
         <antcall target="if${userparam}"/>
-		<sf:deploy username="${sf.username}" password="${sf.password}" serverurl="${sf.serverurl}" maxPoll="${sf.maxPoll}" deployRoot="../PackagetoRemoveFromSandbox"/>
+		<sf:deploy username="${sf.username}" password="${sf.password}" serverurl="${sf.serverurl}" maxPoll="${sf.maxPoll}" deployRoot="src"/>
     </target>
 	
 	<!-- 	Retrieve data from Sandbox and store it in your local folder, The package.xml will be stored in local	-->
