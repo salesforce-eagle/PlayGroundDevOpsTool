@@ -24,7 +24,7 @@
         </sequential>
     </macrodef>
 	<!--	Checkout And Pull before deploying	-->
-	<macrodef name = "git-checkout">
+	<macrodef name = "git-checkout-pull">
         <attribute name = "branch" />
         <attribute name = "dest" default = ""/>
         <sequential>
@@ -88,17 +88,17 @@
 	
 	<!-- Club all the Marcro's in One Target to make use of the Single Command -->    
     <target name="UpgradeMySandbox" >
-        <git-checkout-status-merge-undeploy-deploy branch="${branch}" />
+        <git-checkout-pull branch="${branch}" />
         <echo>Any changes on your sandbox that are not commited to GIT branch will be lost.</echo>
         <input message="Do you still wants to continue (y/n)?" validargs="y,n,Y,N" addproperty="userparam"/>
         <antcall target="if${userparam}"/>
-		<sf:deploy username="${sf.username}" password="${sf.password}" serverurl="${sf.serverurl}" maxPoll="${sf.maxPoll}" deployRoot="../PackagetoRemoveFromSandbox"/>
+		<sf:deploy username="${sf.username}" password="${sf.password}" serverurl="${sf.serverurl}" maxPoll="${sf.maxPoll}" deployRoot="src"/>
     </target>
 	
 	<!-- 	Retrieve data from Sandbox and store it in your local folder, The package.xml will be stored in local	-->
 	<target name="RetrieveLocalChanges" >
 		<git-checkout branch="${branch}" />
-        <sf:retrieve username="${sf.username}" password="${sf.password}" serverurl="${sf.serverurl}" maxPoll="${sf.maxPoll}" retrieveTarget="src" unpackaged="../package.xml"/>
+        <sf:retrieve username="${sf.username}" password="${sf.password}" serverurl="${sf.serverurl}" maxPoll="${sf.maxPoll}" retrieveTarget="src" allowMissingFile="true" unpackaged="../package.xml"/>
         <git-status-commit-push commit-message="${commit-message}"/>
     </target>
 	
