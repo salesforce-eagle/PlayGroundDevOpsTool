@@ -1,0 +1,26 @@
+<aura:component controller="SetUpAuditTrileClass"
+                implements="force:appHostable,flexipage:availableForAllPageTypes,flexipage:availableForRecordHome,force:hasRecordId,forceCommunity:availableForAllPageTypes,force:lightningQuickAction" 
+                access="global" >    
+    <aura:attribute name="data" type="Object"/>
+    <aura:attribute name="columns" type="List"/>
+    <aura:attribute name="recordId" type="String"/>    
+    <aura:attribute name="showTable" type="Boolean" default="false"/>
+    
+    <aura:handler name="init" action="{!c.doInit}" value="{!this}"/>
+    
+    <lightning:button variant="brand" label="Get Details" title="Get Details" class="buttonClass" onclick="{! c.handleClick }"/>
+    <lightning:button variant="brand" label="Send Email" title="Send Email" class="emailbtn" onclick="{! c.emailSend }"/>
+    <aura:if isTrue="{!v.showTable}">
+        <lightning:card title="Generate Report- Data Modified Today">
+            <lightning:datatable
+                                 aura:id="modifyData"
+                                 columns="{! v.columns }"
+                                 data="{! v.data }"
+                                 keyField="Id"
+                                 onsave ="{!c.onSave}"
+                                 hideCheckboxColumn="true"
+                                 onrowaction="{! c.viewRecord }" />
+        </lightning:card>
+    </aura:if>
+    
+</aura:component>
