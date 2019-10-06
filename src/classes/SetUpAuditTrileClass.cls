@@ -15,7 +15,7 @@ public class SetUpAuditTrileClass{
         inr.userActionMap = new Map<String, String>();
         inr.auditList = new List<SetupAuditTrail>();
         inr.auditList = [SELECT Id, Action, Section, createdDate,CreatedById, CreatedBy.Name, Display
-                         FROM SetupAuditTrail where CreatedDate = Yesterday];
+                         FROM SetupAuditTrail where CreatedDate = Today];
         for(SetupAuditTrail sat: inr.auditList){
             if(inr.userActionMap.containsKey(sat.CreatedById)){
                 string temp = inr.userActionMap.get(sat.CreatedById);

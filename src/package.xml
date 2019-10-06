@@ -17,6 +17,10 @@
         <name>CustomObject</name>
     </types>
     <types>
+        <members>Account Layout</members>
+        <name>Layout</name>
+    </types>
+    <types>
         <members>*</members>
         <name>Profile</name>
     </types>
