@@ -1,3 +1,3 @@
 <aura:application extends="ltng:outApp" >
-    <c:parentExpr />
+    <c:parentExpr /> 
 </aura:application>
