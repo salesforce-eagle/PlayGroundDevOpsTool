@@ -1,5 +1,6 @@
 # PlayGroundDevOpsTool
-      This repository contains code base of our partial deployment engine which work like other Devops tools(Jenkins, Autorabit, Circle CI)
+      This repository contains code base of our partial deployment engine which work like other Devops tools(Jenkins, Autorabit, Circle CI)<br>
+      Heart of this repository is residing in **build.xml**.
 # Features Covered
        1. Required no knowledge of DevOps to run this as long as developers/testers/admins know how to use DOS/Command Prompt/Terminal.
        2. With click of a single command your package will be pulled from your sandbox and will push all the changes to GIT remote repository.
